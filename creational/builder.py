@@ -72,11 +72,17 @@ class HtmlBuilder:
         else:
             parent_element.add_content(element_or_content)
 
+    def change_root(self, new_root: HtmlElement = None) -> None:
+        new_root.add_child(self.root)
+        self.root = new_root
+        self.elements_by_ids[new_root.id] = new_root
+
     def str(self):
         return self.root.str(0)
 
 
 if __name__ == "__main__":
+    div = HtmlElement("div", 5)
     li = HtmlElement("li", 1)
     content = HtmlContent("Seila qualquer coisa aqui!")
     li2 = HtmlElement("li", 2)
@@ -89,5 +95,8 @@ if __name__ == "__main__":
     builder.add_child(content2, 1)
     builder.add_child(content, 2)
 
+    print(builder.str())
+
+    builder.change_root(div)
 
     print(builder.str())
