@@ -56,7 +56,10 @@ class HtmlBuilder:
         self.elements_by_ids = dict()
         self.elements_by_ids[root.id] = root
 
-    def add_child(self, element_or_content, parent_id):
+    def add_child(self, element_or_content, parent_id=None):
+        if not parent_id:
+            parent_id = self.root.id
+
         if not parent_id in self.elements_by_ids:
             return
 
@@ -88,15 +91,17 @@ if __name__ == "__main__":
     li2 = HtmlElement("li", 2)
     content2 = HtmlContent("Qualquer outra coisa aqui!")
     ul = HtmlElement("ul", 3)
+    p = HtmlElement("p", 4)
 
     builder = HtmlBuilder(ul)
-    builder.add_child(li, 3)
-    builder.add_child(li2, 3)
+    builder.add_child(li)
+    builder.add_child(li2)
     builder.add_child(content2, 1)
     builder.add_child(content, 2)
 
     print(builder.str())
 
     builder.change_root(div)
+    builder.add_child(p)
 
     print(builder.str())
