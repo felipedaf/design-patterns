@@ -1,4 +1,3 @@
-
 """
 Factory Design Pattern
 
